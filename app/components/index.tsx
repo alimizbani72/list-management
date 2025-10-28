@@ -105,7 +105,7 @@ export default function ListSection() {
       </Grid>
       {/* modal section  */}
       <ItemModal
-        key={editing?.id}
+        key={editing?.id ?? "new"}
         open={modalOpen}
         onClose={() => toggleModal()}
         onSubmit={modalMode === "create" ? createHandler : updateHandler}
