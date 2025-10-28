@@ -40,6 +40,7 @@ export const ItemModal = ({
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm<ItemForm>({
@@ -53,6 +54,12 @@ export const ItemModal = ({
     onClose();
   };
 
+  const closeHandler = () => {
+    if (mode === "create") {
+      reset({ title: "", subtitle: "" });
+    }
+    onClose();
+  };
   const title = watch("title");
   const subtitle = watch("subtitle");
 
@@ -64,7 +71,7 @@ export const ItemModal = ({
         : true;
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+    <Dialog open={open} onClose={closeHandler} fullWidth maxWidth="xs">
       <DialogTitle>
         {mode === "create" ? "Create Item" : "Edit Item"}
       </DialogTitle>
@@ -105,7 +112,7 @@ export const ItemModal = ({
         </Box>
       </DialogContent>
       <DialogActions sx={{ mx: 4 }}>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={closeHandler}>Cancel</Button>
         <Button
           onClick={handleSubmit(submitHandler)}
           variant="contained"
